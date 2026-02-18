@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
     icons.forEach(icon => {
         let offsetX, offsetY;
         let isDragging = false;
-        let originalX, originalY;
 
         icon.addEventListener("mousedown", (e) => {
             isDragging = true;
