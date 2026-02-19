@@ -31,5 +31,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    const projectsIcon = document.getElementById('projectsIcon');
+    const projectsFolder = document.getElementById('projectsFolder');
+    const closeBtn = document.getElementById('.close-btn');
+
+    projectsIcon.addEventListener("click", () => {
+        projectsFolder.style.display = "block";
+    });
+
+    closeBtn.addEventListener("click", () => {
+        projectsFolder.style.display = "none";
+    }); 
 });
 

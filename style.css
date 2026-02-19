@@ -35,3 +35,25 @@ body {
     margin-top: 5px;
     font-size: 14px;
 }
+
+.folder{
+    display: none  ;
+    position: absolute;
+    top: 150px;
+    left:200px;
+    width: 300px;
+    background:white
+    border: 2px solid black;
+    padding: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.folder-header{
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.close-btn{
+    cursor: pointer;
+}
