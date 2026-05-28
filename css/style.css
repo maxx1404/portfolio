@@ -1,0 +1,991 @@
+/* ============================================================
+   MAXSON MATHEW — PORTFOLIO OS  v2
+   style.css
+
+   1.  CSS Custom Properties (Themes)
+   2.  Reset & Base
+   3.  Typography
+   4.  Desktop / Wallpaper
+   5.  Desktop Icons  — no borders, raw OS energy
+   6.  Window System  — Windows-style buttons (top-right)
+   7.  Window Content (per section)
+   8.  Chatbot Window
+   9.  Context Menu (right-click)
+   10. Taskbar
+   11. Animations
+   12. Scrollbar
+   13. Mobile Fallback
+   ============================================================ */
+
+
+/* ============================================================
+   1. CSS CUSTOM PROPERTIES
+   ============================================================ */
+
+:root,
+[data-theme="forest"] {
+  --bg-wallpaper:         #1a2416;
+  --bg-desktop:           #1a2416;
+  --bg-window:            #f5f0e8;
+  --bg-window-header:     #2d3d28;
+  --bg-taskbar:           rgba(26, 36, 22, 0.95);
+  --bg-icon:              transparent;
+  --bg-icon-hover:        rgba(245, 240, 232, 0.12);
+  --bg-card:              #ede8df;
+  --bg-tag:               rgba(45, 61, 40, 0.12);
+
+  --text-primary:         #1a2416;
+  --text-secondary:       #4a5a44;
+  --text-muted:           #7a8a74;
+  --text-on-dark:         #d4ccbb;
+  --text-on-header:       #c8d4bc;
+  --text-icon:            #d4ccbb;
+  --text-taskbar:         #a8b8a0;
+
+  --accent-primary:       #5a8a5a;
+  --accent-secondary:     #8aab6a;
+  --accent-highlight:     #c4a44a;
+  --accent-glow:          rgba(90, 138, 90, 0.3);
+
+  --window-border:        rgba(90, 138, 90, 0.25);
+  --window-shadow:        0 24px 60px rgba(0,0,0,0.5), 0 8px 20px rgba(0,0,0,0.3);
+  --window-radius:        0px;
+  --taskbar-border:       rgba(90, 138, 90, 0.2);
+  --grid-color:           rgba(90, 138, 90, 0.04);
+
+  --font-display:         'Playfair Display', Georgia, serif;
+  --font-body:            'Lora', Georgia, serif;
+  --font-mono:            'JetBrains Mono', monospace;
+  --font-ui:              'DM Sans', sans-serif;
+
+  --tag-bg:               rgba(90, 138, 90, 0.12);
+  --tag-text:             #2d3d28;
+  --tag-border:           rgba(90, 138, 90, 0.25);
+  --scrollbar-track:      #ede8df;
+  --scrollbar-thumb:      #5a8a5a;
+
+  /* Windows OS titlebar colors */
+  --titlebar-bg:          #2d3d28;
+  --titlebar-text:        #c8d4bc;
+  --btn-close-bg:         #c0392b;
+  --btn-close-hover:      #e74c3c;
+  --btn-min-bg:           #4a5a44;
+  --btn-min-hover:        #6a7a64;
+  --btn-max-bg:           #4a5a44;
+  --btn-max-hover:        #6a7a64;
+}
+
+[data-theme="electric"] {
+  --bg-wallpaper:         #080c14;
+  --bg-desktop:           #080c14;
+  --bg-window:            #0d1117;
+  --bg-window-header:     #0a1628;
+  --bg-taskbar:           rgba(8, 12, 20, 0.97);
+  --bg-icon:              transparent;
+  --bg-icon-hover:        rgba(0, 200, 255, 0.1);
+  --bg-card:              #111827;
+  --bg-tag:               rgba(0, 200, 255, 0.08);
+
+  --text-primary:         #e0f0ff;
+  --text-secondary:       #88aacc;
+  --text-muted:           #445566;
+  --text-on-dark:         #88bbdd;
+  --text-on-header:       #00c8ff;
+  --text-icon:            #88bbdd;
+  --text-taskbar:         #557799;
+
+  --accent-primary:       #00c8ff;
+  --accent-secondary:     #0088cc;
+  --accent-highlight:     #00ffaa;
+  --accent-glow:          rgba(0, 200, 255, 0.35);
+
+  --window-border:        rgba(0, 200, 255, 0.18);
+  --window-shadow:        0 24px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,200,255,0.06);
+  --window-radius:        0px;
+  --taskbar-border:       rgba(0, 200, 255, 0.12);
+  --grid-color:           rgba(0, 200, 255, 0.025);
+
+  --font-display:         'Space Grotesk', monospace;
+  --font-body:            'IBM Plex Mono', monospace;
+  --font-mono:            'IBM Plex Mono', monospace;
+  --font-ui:              'Space Grotesk', sans-serif;
+
+  --tag-bg:               rgba(0, 200, 255, 0.08);
+  --tag-text:             #00c8ff;
+  --tag-border:           rgba(0, 200, 255, 0.2);
+  --scrollbar-track:      #0d1117;
+  --scrollbar-thumb:      #00c8ff;
+
+  --titlebar-bg:          #0a1628;
+  --titlebar-text:        #00c8ff;
+  --btn-close-bg:         #8b0000;
+  --btn-close-hover:      #cc0000;
+  --btn-min-bg:           #1a3a5c;
+  --btn-min-hover:        #2a5a8c;
+  --btn-max-bg:           #1a3a5c;
+  --btn-max-hover:        #2a5a8c;
+}
+
+
+/* ============================================================
+   2. RESET & BASE
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { font-size: 16px; }
+
+body {
+  font-family: var(--font-ui);
+  background-color: var(--bg-desktop);
+  color: var(--text-primary);
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.window-body,
+.window-body * {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+a:hover { opacity: 0.8; text-decoration: underline; }
+
+
+/* ============================================================
+   3. TYPOGRAPHY
+   ============================================================ */
+
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; }
+p, li       { font-family: var(--font-body); line-height: 1.7; }
+code, pre   { font-family: var(--font-mono); }
+
+
+/* ============================================================
+   4. DESKTOP / WALLPAPER
+   Canvas sits behind everything — JS draws the animated bg.
+   ============================================================ */
+
+#desktop {
+  position: fixed;
+  inset: 0;
+  bottom: 44px;
+  background-color: var(--bg-wallpaper);
+  overflow: hidden;
+  transition: background-color 0.5s ease;
+}
+
+/* Animated canvas background — full desktop */
+#bg-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Everything above the canvas */
+#icon-grid,
+.os-window,
+#desktop-identity {
+  position: relative;
+  z-index: 1;
+}
+
+#desktop-identity {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  animation: identityFadeIn 1s ease 0.8s forwards;
+}
+
+@keyframes identityFadeIn { to { opacity: 0.12; } }
+
+#desktop-identity h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  color: var(--text-on-dark);
+  letter-spacing: 0.04em;
+}
+
+#desktop-identity p {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  color: var(--text-on-dark);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+
+/* ============================================================
+   5. DESKTOP ICONS
+   No background box. No border. Raw floating icons.
+   Like actual Windows desktop icons.
+   ============================================================ */
+
+#icon-grid {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 80px);
+  gap: 8px 16px;
+  z-index: 10;
+  /* Icons are individually positioned when draggable mode kicks in */
+}
+
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 76px;
+  padding: 8px 4px;
+  border-radius: 2px;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: default;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  position: relative;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Single click — Windows-style blue selection highlight */
+.desktop-icon.selected {
+  background: rgba(0, 120, 215, 0.35);
+  border-color: rgba(0, 120, 215, 0.6);
+}
+
+[data-theme="electric"] .desktop-icon.selected {
+  background: rgba(0, 200, 255, 0.2);
+  border-color: rgba(0, 200, 255, 0.5);
+}
+
+/* Hover — very subtle */
+.desktop-icon:hover:not(.selected) {
+  background: rgba(255,255,255,0.06);
+}
+
+/* The icon image — emoji or SVG */
+.desktop-icon .icon-img {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  line-height: 1;
+  /* Drop shadow for visibility on any wallpaper */
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));
+  transition: transform 0.1s ease;
+}
+
+.desktop-icon:hover .icon-img {
+  transform: translateY(-1px);
+}
+
+/* Icon label — Windows style: text with dark drop shadow */
+.desktop-icon .icon-label {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+  line-height: 1.3;
+  text-shadow:
+    1px 1px 2px rgba(0,0,0,0.9),
+    0 0 6px rgba(0,0,0,0.8);
+  letter-spacing: 0.01em;
+  max-width: 72px;
+  word-break: break-word;
+}
+
+/* Dragging state */
+.desktop-icon.dragging {
+  opacity: 0.7;
+  z-index: 9999;
+}
+
+/* When icons are in free-drag mode they become absolute */
+.desktop-icon.free-positioned {
+  position: absolute;
+}
+
+
+/* ============================================================
+   6. WINDOW SYSTEM
+   Windows OS style:
+   - Square corners (border-radius: 0)
+   - Title bar: icon + title LEFT, 3 buttons TOP-RIGHT
+   - Close = red X, Min = _, Max = □
+   ============================================================ */
+
+.os-window {
+  position: absolute;
+  min-width: 320px;
+  min-height: 180px;
+  background: var(--bg-window);
+  border: 1px solid var(--window-border);
+  border-radius: var(--window-radius);
+  box-shadow: var(--window-shadow);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow: hidden;
+  animation: windowOpen 0.18s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes windowOpen {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.os-window.is-minimised { display: none !important; }
+
+.os-window.is-maximised {
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 0;
+  border: none;
+}
+
+/* ---- WINDOWS-STYLE TITLE BAR ---- */
+.window-header {
+  display: flex;
+  align-items: center;
+  padding: 0 0 0 10px;
+  height: 32px;
+  background: var(--titlebar-bg);
+  cursor: grab;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--window-border);
+  gap: 8px;
+  transition: background-color 0.4s ease;
+}
+
+.window-header:active { cursor: grabbing; }
+
+.window-header-icon {
+  font-size: 14px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.window-title {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--titlebar-text);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  letter-spacing: 0.03em;
+}
+
+/* Window control buttons — TOP RIGHT, Windows style */
+.window-controls {
+  display: flex;
+  align-items: stretch;
+  height: 32px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.wc-btn {
+  width: 46px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--titlebar-text);
+  font-size: 13px;
+  font-family: var(--font-mono);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.1s ease, color 0.1s ease;
+  border-radius: 0;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.wc-btn:hover { background: rgba(255,255,255,0.1); }
+.wc-btn.close:hover { background: var(--btn-close-hover) !important; color: #fff; }
+.wc-btn.min:hover   { background: var(--btn-min-hover); }
+.wc-btn.max:hover   { background: var(--btn-max-hover); }
+
+/* Window body */
+.window-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 24px 28px;
+  color: var(--text-primary);
+  background: var(--bg-window);
+  transition: background-color 0.4s ease;
+}
+
+/* Focus ring */
+.os-window.is-focused {
+  box-shadow: var(--window-shadow);
+  border-color: var(--accent-primary);
+}
+
+/* Unfocused windows dim slightly */
+.os-window:not(.is-focused) .window-header {
+  opacity: 0.75;
+}
+
+/* Resize handle — bottom-right corner */
+.window-resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 14px;
+  height: 14px;
+  cursor: se-resize;
+  z-index: 10;
+}
+
+.window-resize-handle::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  opacity: 0.4;
+}
+
+/* Shared section styles */
+.section-heading {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.section-subheading {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent-primary);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.section-divider {
+  width: 40px;
+  height: 2px;
+  background: var(--accent-primary);
+  margin: 8px 0 22px 0;
+}
+
+.window-body p {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 14px;
+}
+
+
+/* ============================================================
+   7. WINDOW CONTENT — per section (same as v1, condensed)
+   ============================================================ */
+
+/* ABOUT */
+.about-layout { display: grid; grid-template-columns: 130px 1fr; gap: 24px; margin-bottom: 24px; }
+
+.about-photo-slot {
+  width: 110px; height: 110px; border-radius: 6px;
+  background: var(--bg-card); border: 2px dashed var(--window-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: var(--text-muted); font-family: var(--font-mono);
+  text-align: center; line-height: 1.5; overflow: hidden;
+}
+.about-photo-slot img { width:100%; height:100%; object-fit:cover; border-radius:4px; }
+
+.about-intro h2 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+
+.role-badge {
+  display: inline-block; font-family: var(--font-ui); font-size: 0.72rem;
+  font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--accent-primary); background: var(--tag-bg);
+  border: 1px solid var(--tag-border); padding: 3px 10px; border-radius: 2px; margin-bottom: 12px;
+}
+
+.about-stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 16px 0; }
+
+.stat-card {
+  background: var(--bg-card); border: 1px solid var(--window-border);
+  padding: 12px 14px; transition: border-color 0.2s;
+}
+.stat-card:hover { border-color: var(--accent-primary); }
+.stat-card .stat-value { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--accent-primary); line-height: 1; margin-bottom: 3px; }
+.stat-card .stat-label { font-family: var(--font-ui); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+
+.about-highlights { margin-top: 12px; }
+.highlight-item { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--window-border); }
+.highlight-item:last-child { border-bottom: none; }
+.highlight-dot { width: 5px; height: 5px; background: var(--accent-primary); border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
+.highlight-item p { margin: 0; font-size: 0.88rem; color: var(--text-secondary); }
+.highlight-item strong { color: var(--text-primary); font-family: var(--font-ui); }
+
+/* EXPERIENCE */
+.experience-card { background: var(--bg-card); border: 1px solid var(--window-border); padding: 20px 24px; margin-bottom: 16px; position: relative; }
+.experience-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--accent-primary); }
+.exp-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; gap:12px; }
+.exp-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
+.exp-company { font-family: var(--font-ui); font-size: 0.9rem; color: var(--accent-primary); font-weight: 600; }
+.exp-duration { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); background: var(--bg-tag); padding: 3px 8px; white-space: nowrap; }
+.exp-tech-stack, .project-tags { display:flex; flex-wrap:wrap; gap:7px; margin: 10px 0; }
+.tech-tag, .skill-tag {
+  font-family: var(--font-mono); font-size: 0.7rem; padding: 2px 8px;
+  background: var(--tag-bg); color: var(--tag-text); border: 1px solid var(--tag-border);
+  font-weight: 500; transition: border-color 0.2s, transform 0.1s;
+}
+.skill-tag:hover { border-color: var(--accent-primary); transform: translateY(-1px); }
+.exp-bullets { list-style:none; margin-top:10px; }
+.exp-bullets li { display:flex; gap:8px; padding:4px 0; font-family:var(--font-body); font-size:0.88rem; color:var(--text-secondary); line-height:1.6; }
+.exp-bullets li::before { content:'→'; color:var(--accent-primary); flex-shrink:0; font-family:var(--font-mono); }
+
+/* PROJECTS */
+.projects-grid { display:flex; flex-direction:column; gap:16px; }
+.project-card { background:var(--bg-card); border:1px solid var(--window-border); overflow:hidden; transition:border-color 0.2s, box-shadow 0.2s; }
+.project-card:hover { border-color:var(--accent-primary); box-shadow: 0 4px 16px var(--accent-glow); }
+.project-img-slot { width:100%; height:140px; background:var(--bg-window-header); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-family:var(--font-mono); font-size:10px; text-align:center; position:relative; overflow:hidden; }
+.project-img-slot img { width:100%; height:100%; object-fit:cover; }
+.project-img-slot::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg, var(--accent-glow) 0%, transparent 60%); opacity:0.4; pointer-events:none; }
+.project-img-placeholder-text { position:relative; z-index:1; }
+.project-body { padding:14px 16px 16px; }
+.project-meta { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+.project-title { font-family:var(--font-display); font-size:1rem; font-weight:700; color:var(--text-primary); }
+.project-date { font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted); }
+.project-description { font-family:var(--font-body); font-size:0.85rem; color:var(--text-secondary); line-height:1.6; margin-bottom:10px; }
+.project-points { list-style:none; margin-bottom:12px; }
+.project-points li { font-family:var(--font-body); font-size:0.8rem; color:var(--text-secondary); padding:2px 0; display:flex; gap:6px; }
+.project-points li::before { content:'▸'; color:var(--accent-primary); flex-shrink:0; font-size:0.72rem; margin-top:3px; }
+.project-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+.project-link { display:inline-flex; align-items:center; gap:5px; font-family:var(--font-ui); font-size:0.75rem; font-weight:600; color:var(--accent-primary); border:1px solid var(--accent-primary); padding:4px 10px; transition:background 0.2s, color 0.2s; text-decoration:none !important; }
+.project-link:hover { background:var(--accent-primary); color:var(--bg-window); opacity:1; }
+
+/* SKILLS */
+.skills-categories { display:flex; flex-direction:column; gap:20px; }
+.skill-category-title { font-family:var(--font-ui); font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; color:var(--accent-primary); margin-bottom:10px; }
+.skill-tags-cluster { display:flex; flex-wrap:wrap; gap:8px; }
+
+/* ACHIEVEMENTS */
+.achievements-list { display:flex; flex-direction:column; gap:12px; margin-bottom:24px; }
+.achievement-item { display:flex; gap:14px; align-items:flex-start; background:var(--bg-card); border:1px solid var(--window-border); padding:14px 16px; transition:border-color 0.2s; }
+.achievement-item:hover { border-color:var(--accent-primary); }
+.achievement-medal { font-size:1.4rem; line-height:1; flex-shrink:0; }
+.achievement-info h4 { font-family:var(--font-ui); font-size:0.9rem; font-weight:700; color:var(--text-primary); margin-bottom:3px; }
+.achievement-info p { font-family:var(--font-body); font-size:0.8rem; color:var(--text-secondary); margin:0; line-height:1.5; }
+.certs-section { margin-top:8px; }
+.cert-item { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--window-border); }
+.cert-item:last-child { border-bottom:none; }
+.cert-icon { width:28px; height:28px; background:var(--tag-bg); border:1px solid var(--tag-border); display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+.cert-info h5 { font-family:var(--font-ui); font-size:0.82rem; font-weight:600; color:var(--text-primary); }
+.cert-info span { font-family:var(--font-mono); font-size:0.68rem; color:var(--text-muted); }
+
+/* CONTACT */
+.contact-layout { display:flex; flex-direction:column; gap:12px; }
+.contact-item { display:flex; align-items:center; gap:14px; background:var(--bg-card); border:1px solid var(--window-border); padding:14px 18px; transition:border-color 0.2s, box-shadow 0.2s; text-decoration:none !important; }
+.contact-item:hover { border-color:var(--accent-primary); box-shadow: 0 3px 14px var(--accent-glow); opacity:1; }
+.contact-icon { font-size:1.4rem; flex-shrink:0; }
+.contact-info h4 { font-family:var(--font-ui); font-size:0.75rem; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:2px; }
+.contact-info p { font-family:var(--font-body); font-size:0.9rem; color:var(--accent-primary); margin:0; }
+.contact-resume-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:12px 20px; background:var(--accent-primary); color:var(--bg-window); font-family:var(--font-ui); font-size:0.88rem; font-weight:700; border:none; width:100%; margin-top:4px; transition:opacity 0.2s, transform 0.15s; text-decoration:none !important; }
+.contact-resume-btn:hover { opacity:0.88; transform:translateY(-1px); color:var(--bg-window); }
+
+/* FOLDER CONTENTS — shared file browser style */
+.folder-view { display:flex; flex-direction:column; gap:2px; }
+.folder-item { display:flex; align-items:center; gap:12px; padding:8px 10px; border:1px solid transparent; transition:background 0.15s, border-color 0.15s; }
+.folder-item:hover { background:var(--bg-icon-hover); border-color:var(--window-border); }
+.folder-item-icon { font-size:1.2rem; flex-shrink:0; }
+.folder-item-name { font-family:var(--font-ui); font-size:0.88rem; color:var(--text-primary); font-weight:500; }
+.folder-item-meta { font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted); margin-left:auto; }
+.folder-breadcrumb { font-family:var(--font-mono); font-size:0.72rem; color:var(--text-muted); margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--window-border); }
+.folder-breadcrumb span { color:var(--accent-primary); }
+
+/* FUN FOLDERS — special content */
+.fun-content { font-family:var(--font-body); font-size:0.9rem; color:var(--text-secondary); line-height:1.8; }
+.fun-content h3 { font-family:var(--font-display); color:var(--text-primary); margin-bottom:12px; }
+.fun-content .mono-block { font-family:var(--font-mono); font-size:0.78rem; background:var(--bg-card); padding:16px; margin:12px 0; border:1px solid var(--window-border); line-height:2; }
+
+/* ADDRESS BAR for folder windows */
+.folder-address-bar { display:flex; align-items:center; gap:8px; padding:6px 10px; background:var(--bg-card); border-bottom:1px solid var(--window-border); font-family:var(--font-mono); font-size:0.72rem; color:var(--text-muted); flex-shrink:0; }
+.folder-address-bar .addr-path { color:var(--text-secondary); flex:1; }
+.folder-nav-btn { background:transparent; border:1px solid var(--window-border); color:var(--text-muted); font-size:11px; padding:2px 8px; font-family:var(--font-mono); transition:background 0.15s; }
+.folder-nav-btn:hover { background:var(--bg-icon-hover); color:var(--text-primary); }
+
+/* STATUS BAR at bottom of folder windows */
+.folder-status-bar { padding:4px 10px; background:var(--bg-card); border-top:1px solid var(--window-border); font-family:var(--font-mono); font-size:0.68rem; color:var(--text-muted); flex-shrink:0; }
+
+
+/* ============================================================
+   8. CHATBOT WINDOW
+   ============================================================ */
+
+.chat-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-message {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  animation: msgSlideIn 0.2s ease;
+}
+
+@keyframes msgSlideIn {
+  from { opacity:0; transform:translateY(6px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.chat-message.user { flex-direction: row-reverse; }
+
+.chat-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--window-border);
+}
+
+.chat-bubble {
+  max-width: 75%;
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  border: 1px solid var(--window-border);
+}
+
+.chat-message.user .chat-bubble {
+  background: var(--accent-primary);
+  color: var(--bg-window);
+  border-color: transparent;
+}
+
+/* Typing indicator */
+.chat-typing {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 10px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--window-border);
+  width: fit-content;
+}
+
+.chat-typing span {
+  width: 6px; height: 6px;
+  background: var(--text-muted);
+  border-radius: 50%;
+  animation: typingBounce 1.2s infinite ease-in-out;
+}
+.chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+.chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: translateY(0); opacity:0.4; }
+  40%            { transform: translateY(-5px); opacity:1; }
+}
+
+/* Chat input row */
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--window-border);
+  background: var(--bg-card);
+  flex-shrink: 0;
+}
+
+.chat-input {
+  flex: 1;
+  background: var(--bg-window);
+  border: 1px solid var(--window-border);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: none;
+  height: 38px;
+  line-height: 1.4;
+}
+
+.chat-input:focus { border-color: var(--accent-primary); }
+.chat-input::placeholder { color: var(--text-muted); }
+
+.chat-send-btn {
+  background: var(--accent-primary);
+  border: none;
+  color: var(--bg-window);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+.chat-send-btn:hover { opacity: 0.85; }
+.chat-send-btn:disabled { opacity: 0.4; }
+
+/* API key notice banner */
+.chat-api-notice {
+  background: rgba(196, 164, 74, 0.15);
+  border: 1px solid rgba(196, 164, 74, 0.3);
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent-highlight);
+  line-height: 1.6;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.chat-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 14px;
+  border-top: 1px solid var(--window-border);
+  flex-shrink: 0;
+}
+
+.chat-suggestion-btn {
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-border);
+  color: var(--tag-text);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  transition: background 0.15s, border-color 0.15s;
+}
+.chat-suggestion-btn:hover { background: var(--bg-icon-hover); border-color: var(--accent-primary); }
+
+
+/* ============================================================
+   9. RIGHT-CLICK CONTEXT MENU
+   ============================================================ */
+
+#context-menu {
+  position: fixed;
+  z-index: 9999;
+  min-width: 200px;
+  background: var(--bg-window-header);
+  border: 1px solid var(--window-border);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  display: none;
+  flex-direction: column;
+  padding: 4px 0;
+  animation: contextIn 0.1s ease;
+}
+
+@keyframes contextIn {
+  from { opacity:0; transform:scale(0.96); }
+  to   { opacity:1; transform:scale(1); }
+}
+
+#context-menu.visible { display: flex; }
+
+.ctx-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 16px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--text-on-dark);
+  transition: background 0.1s;
+  white-space: nowrap;
+}
+
+.ctx-item:hover { background: rgba(255,255,255,0.1); }
+
+.ctx-item .ctx-icon { font-size: 13px; width: 18px; text-align: center; flex-shrink:0; }
+
+.ctx-separator {
+  height: 1px;
+  background: var(--window-border);
+  margin: 4px 0;
+}
+
+.ctx-item.ctx-danger { color: #ff6b6b; }
+.ctx-item.ctx-danger:hover { background: rgba(255, 107, 107, 0.15); }
+
+.ctx-item.ctx-disabled { opacity: 0.4; pointer-events: none; }
+
+/* Submenu indicator */
+.ctx-item.has-sub::after {
+  content: '▶';
+  font-size: 9px;
+  margin-left: auto;
+  opacity: 0.5;
+}
+
+
+/* ============================================================
+   10. TASKBAR
+   ============================================================ */
+
+#taskbar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 44px;
+  background: var(--bg-taskbar);
+  border-top: 1px solid var(--taskbar-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 10px;
+  z-index: 1000;
+  transition: background 0.5s ease;
+  animation: taskbarUp 0.4s ease 0.2s forwards;
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+@keyframes taskbarUp { to { opacity:1; transform:translateY(0); } }
+
+#taskbar-logo { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+#taskbar-logo .logo-text { font-family:var(--font-display); font-size:13px; font-weight:700; color:var(--text-on-dark); white-space:nowrap; }
+#taskbar-logo .logo-dot { width:5px; height:5px; background:var(--accent-primary); border-radius:50%; box-shadow: 0 0 6px var(--accent-glow); }
+
+.taskbar-sep { width:1px; height:18px; background:var(--taskbar-border); flex-shrink:0; }
+
+#taskbar-windows { flex:1; display:flex; align-items:center; gap:4px; overflow-x:auto; overflow-y:hidden; }
+#taskbar-windows::-webkit-scrollbar { height:2px; }
+#taskbar-windows::-webkit-scrollbar-thumb { background:var(--taskbar-border); }
+
+.taskbar-window-btn {
+  display:flex; align-items:center; gap:6px; padding:3px 10px;
+  background:rgba(255,255,255,0.04); border:1px solid var(--taskbar-border);
+  color:var(--text-taskbar); font-family:var(--font-ui); font-size:11px;
+  font-weight:500; white-space:nowrap; transition:background 0.15s, color 0.15s, border-color 0.15s;
+  max-width: 130px; overflow:hidden; text-overflow:ellipsis;
+}
+.taskbar-window-btn:hover { background:rgba(255,255,255,0.08); color:var(--text-on-dark); }
+.taskbar-window-btn.is-active { color:var(--text-on-dark); border-color:var(--accent-primary); }
+.taskbar-window-btn::before { content:''; display:block; width:4px; height:4px; border-radius:50%; background:var(--text-muted); flex-shrink:0; }
+.taskbar-window-btn.is-active::before { background:var(--accent-primary); box-shadow: 0 0 4px var(--accent-glow); }
+
+#taskbar-controls { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+
+#theme-toggle {
+  display:flex; align-items:center; gap:6px; padding:4px 12px;
+  background:rgba(255,255,255,0.04); border:1px solid var(--taskbar-border);
+  color:var(--text-taskbar); font-family:var(--font-ui); font-size:11px;
+  font-weight:600; border-radius:2px; letter-spacing:0.03em; white-space:nowrap;
+  transition:background 0.15s, color 0.15s, border-color 0.15s;
+}
+#theme-toggle:hover { background:rgba(255,255,255,0.08); color:var(--text-on-dark); border-color:var(--accent-primary); }
+
+.taskbar-icon-link { display:flex; align-items:center; justify-content:center; width:28px; height:28px; color:var(--text-taskbar); font-size:15px; transition:color 0.15s, background 0.15s; text-decoration:none !important; border-radius:2px; }
+.taskbar-icon-link:hover { color:var(--text-on-dark); background:rgba(255,255,255,0.07); opacity:1; }
+
+#taskbar-clock { font-family:var(--font-mono); font-size:11px; color:var(--text-taskbar); letter-spacing:0.08em; min-width:64px; text-align:right; }
+
+[data-theme="electric"] #taskbar-clock { color:var(--accent-primary); text-shadow: 0 0 8px var(--accent-glow); }
+[data-theme="electric"] .logo-dot { animation: pulseDot 2s ease-in-out infinite; }
+@keyframes pulseDot { 0%,100%{ box-shadow: 0 0 4px var(--accent-glow); } 50%{ box-shadow: 0 0 12px var(--accent-glow), 0 0 24px var(--accent-glow); } }
+
+
+/* ============================================================
+   11. ANIMATIONS — icon stagger
+   ============================================================ */
+
+.desktop-icon {
+  animation: iconFadeIn 0.35s ease forwards;
+  opacity: 0;
+}
+@keyframes iconFadeIn { from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:translateY(0);} }
+
+
+/* ============================================================
+   12. SCROLLBARS
+   ============================================================ */
+
+.window-body::-webkit-scrollbar { width:5px; }
+.window-body::-webkit-scrollbar-track { background:var(--scrollbar-track); }
+.window-body::-webkit-scrollbar-thumb { background:var(--scrollbar-thumb); opacity:0.6; }
+.chat-messages::-webkit-scrollbar { width:4px; }
+.chat-messages::-webkit-scrollbar-track { background:transparent; }
+.chat-messages::-webkit-scrollbar-thumb { background:var(--scrollbar-thumb); opacity:0.4; }
+
+
+/* ============================================================
+   13. MOBILE FALLBACK
+   ============================================================ */
+
+#mobile-fallback {
+  display:none; position:fixed; inset:0; background:#1a2416;
+  color:#d4ccbb; font-family:'DM Sans',sans-serif; text-align:center;
+  padding:40px 24px; flex-direction:column; align-items:center;
+  justify-content:center; gap:18px; z-index:9999;
+}
+#mobile-fallback .mobile-icon { font-size:3rem; }
+#mobile-fallback h2 { font-family:'Playfair Display',serif; font-size:1.4rem; color:#d4ccbb; }
+#mobile-fallback p { font-size:0.88rem; color:#7a8a74; line-height:1.7; max-width:300px; }
+#mobile-fallback a { color:#5a8a5a; }
+
+@media (max-width:768px) {
+  #mobile-fallback { display:flex; }
+  #desktop, #taskbar { display:none; }
+}
+
+/* Electric theme extras */
+[data-theme="electric"] .section-divider { box-shadow: 0 0 8px var(--accent-primary); }
+[data-theme="electric"] .os-window.is-focused { box-shadow: var(--window-shadow), 0 0 0 1px rgba(0,200,255,0.4); }

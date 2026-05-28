@@ -1,0 +1,79 @@
+/* ============================================================
+   MAXSON MATHEW — PORTFOLIO OS
+   cursors.css — Custom Pixelated Cursor System
+
+   Two cursors, one per theme:
+   Forest  → warm cream pixelated cursor
+   Electric → cyan pixelated cursor
+
+   Strategy: SVG cursors embedded as data URIs so zero
+   external requests needed. Pixelated via shape-rendering.
+   ============================================================ */
+
+/* ============================================================
+   BASE CURSOR — applied to everything
+   SVG is a pixelated arrow, 32x32, theme-colored
+   ============================================================ */
+
+/* Forest theme cursor — cream/warm white pixel arrow */
+:root,
+[data-theme="forest"] {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' shape-rendering='crispEdges'%3E%3Cpolygon points='4,2 4,26 10,20 14,30 18,28 14,18 22,18' fill='%23f5f0e8'/%3E%3Cpolygon points='5,4 5,24 10,19 14,28 17,27 13,17 21,17' fill='%232d3d28'/%3E%3C/svg%3E") 4 2, auto;
+}
+
+/* Electric theme cursor — cyan pixel arrow */
+[data-theme="electric"] {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' shape-rendering='crispEdges'%3E%3Cpolygon points='4,2 4,26 10,20 14,30 18,28 14,18 22,18' fill='%2300c8ff'/%3E%3Cpolygon points='5,4 5,24 10,19 14,28 17,27 13,17 21,17' fill='%23080c14'/%3E%3C/svg%3E") 4 2, auto;
+}
+
+/* ============================================================
+   POINTER CURSOR — for clickable elements
+   Pixelated hand pointer
+   ============================================================ */
+
+[data-theme="forest"] a,
+[data-theme="forest"] button,
+[data-theme="forest"] .desktop-icon,
+[data-theme="forest"] .wc-btn,
+[data-theme="forest"] .contact-item,
+[data-theme="forest"] .project-link,
+[data-theme="forest"] .taskbar-window-btn,
+[data-theme="forest"] #theme-toggle,
+[data-theme="forest"] .taskbar-icon-link,
+[data-theme="forest"] .contact-resume-btn {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' shape-rendering='crispEdges'%3E%3Crect x='10' y='2' width='4' height='2' fill='%23f5f0e8'/%3E%3Crect x='8' y='4' width='4' height='2' fill='%23f5f0e8'/%3E%3Crect x='8' y='6' width='4' height='2' fill='%23f5f0e8'/%3E%3Crect x='8' y='8' width='4' height='8' fill='%23f5f0e8'/%3E%3Crect x='12' y='10' width='4' height='2' fill='%23f5f0e8'/%3E%3Crect x='16' y='12' width='4' height='2' fill='%23f5f0e8'/%3E%3Crect x='20' y='14' width='4' height='2' fill='%23f5f0e8'/%3E%3Crect x='8' y='16' width='16' height='10' fill='%23f5f0e8'/%3E%3C/svg%3E") 10 2, pointer;
+}
+
+[data-theme="electric"] a,
+[data-theme="electric"] button,
+[data-theme="electric"] .desktop-icon,
+[data-theme="electric"] .wc-btn,
+[data-theme="electric"] .contact-item,
+[data-theme="electric"] .project-link,
+[data-theme="electric"] .taskbar-window-btn,
+[data-theme="electric"] #theme-toggle,
+[data-theme="electric"] .taskbar-icon-link,
+[data-theme="electric"] .contact-resume-btn {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' shape-rendering='crispEdges'%3E%3Crect x='10' y='2' width='4' height='2' fill='%2300c8ff'/%3E%3Crect x='8' y='4' width='4' height='2' fill='%2300c8ff'/%3E%3Crect x='8' y='6' width='4' height='2' fill='%2300c8ff'/%3E%3Crect x='8' y='8' width='4' height='8' fill='%2300c8ff'/%3E%3Crect x='12' y='10' width='4' height='2' fill='%2300c8ff'/%3E%3Crect x='16' y='12' width='4' height='2' fill='%2300c8ff'/%3E%3Crect x='20' y='14' width='4' height='2' fill='%2300c8ff'/%3E%3Crect x='8' y='16' width='16' height='10' fill='%2300c8ff'/%3E%3C/svg%3E") 10 2, pointer;
+}
+
+/* ============================================================
+   GRAB CURSOR — window drag handles
+   ============================================================ */
+
+[data-theme="forest"] .window-header {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' shape-rendering='crispEdges'%3E%3Crect x='6' y='8' width='4' height='12' rx='0' fill='%23f5f0e8'/%3E%3Crect x='12' y='6' width='4' height='14' fill='%23f5f0e8'/%3E%3Crect x='18' y='8' width='4' height='12' fill='%23f5f0e8'/%3E%3Crect x='4' y='20' width='24' height='4' fill='%23f5f0e8'/%3E%3C/svg%3E") 16 16, grab;
+}
+
+[data-theme="electric"] .window-header {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' shape-rendering='crispEdges'%3E%3Crect x='6' y='8' width='4' height='12' fill='%2300c8ff'/%3E%3Crect x='12' y='6' width='4' height='14' fill='%2300c8ff'/%3E%3Crect x='18' y='8' width='4' height='12' fill='%2300c8ff'/%3E%3Crect x='4' y='20' width='24' height='4' fill='%2300c8ff'/%3E%3C/svg%3E") 16 16, grab;
+}
+
+/* Text cursor inside window bodies */
+[data-theme="forest"] .window-body {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' shape-rendering='crispEdges'%3E%3Crect x='12' y='2' width='8' height='2' fill='%23f5f0e8'/%3E%3Crect x='14' y='4' width='4' height='22' fill='%23f5f0e8'/%3E%3Crect x='12' y='26' width='8' height='2' fill='%23f5f0e8'/%3E%3C/svg%3E") 16 16, text;
+}
+
+[data-theme="electric"] .window-body {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' shape-rendering='crispEdges'%3E%3Crect x='12' y='2' width='8' height='2' fill='%2300c8ff'/%3E%3Crect x='14' y='4' width='4' height='22' fill='%2300c8ff'/%3E%3Crect x='12' y='26' width='8' height='2' fill='%2300c8ff'/%3E%3C/svg%3E") 16 16, text;
+}
