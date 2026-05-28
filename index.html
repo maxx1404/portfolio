@@ -1,39 +1,856 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="forest">
 <head>
-    ,<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Maxson Mathew — AI/ML Engineer & Developer Portfolio OS" />
+  <title>Maxson Mathew — Portfolio OS</title>
+
+  <!-- Fonts: Forest = Playfair + Lora + DM Sans + JetBrains Mono
+              Electric = Space Grotesk + IBM Plex Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/cursors.css" />
 </head>
 <body>
-    <div class="desktop">
-        <div class="icon" id="projectsIcon" style="top:100px; left:50px;">
-            <img src="images/OIP.webp" alt="Projects">
-            <p>Projects</p>
-        </div>
-        <div class="icon" id="aboutIcon" style="top:200px; left:50px;">
-            <img src ="images/OIP3.webp" alt="About">
-            <p>About</p>
-        </div>
-    </div>
-    <div class="folder" id="projectsFolder">
-        <div class="folder-header">
-            <span>Projects</span>
-            <button class = "close-btn">X</button>
-        </div>
-        <div class="folder-content">
-            <p>Your project files go here...</p>
-        </div>
-    </div>
 
-    <div class="folder" id="aboutFolder">
-        <div class="folder-header">
-            <span>About</span>
-            <button class = "close-btn">X</button>
+<!-- MOBILE FALLBACK -->
+<div id="mobile-fallback" role="alert">
+  <div class="mobile-icon">🖥️</div>
+  <h2>Best on Desktop</h2>
+  <p>This portfolio is a desktop OS experience. Open on a laptop or desktop for the full effect.</p>
+  <p>Reach out: <a href="mailto:mailtomaxson@gmail.com">mailtomaxson@gmail.com</a></p>
+</div>
+
+<!-- ============================================================
+     DESKTOP
+     ============================================================ -->
+<main id="desktop" role="main">
+
+  <!-- Animated canvas background — JS draws particles/grid -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <!-- =====================================
+       DESKTOP ICONS
+       ===================================== -->
+  <nav id="icon-grid" aria-label="Desktop icons">
+
+    <!-- Main sections -->
+    <button class="desktop-icon" data-window="window-about"        title="About — double-click">
+      <div class="icon-img">👤</div><span class="icon-label">About</span>
+    </button>
+    <button class="desktop-icon" data-window="window-experience"   title="Experience — double-click">
+      <div class="icon-img">💼</div><span class="icon-label">Experience</span>
+    </button>
+    <button class="desktop-icon" data-window="window-projects"     title="Projects — double-click">
+      <div class="icon-img">📁</div><span class="icon-label">Projects</span>
+    </button>
+    <button class="desktop-icon" data-window="window-side-projects" title="Side Projects — double-click">
+      <div class="icon-img">🧪</div><span class="icon-label">Side Projects</span>
+    </button>
+    <button class="desktop-icon" data-window="window-skills"       title="Skills — double-click">
+      <div class="icon-img">⚙️</div><span class="icon-label">Skills</span>
+    </button>
+    <button class="desktop-icon" data-window="window-achievements" title="Achievements — double-click">
+      <div class="icon-img">🏆</div><span class="icon-label">Achievements</span>
+    </button>
+    <button class="desktop-icon" data-window="window-contact"      title="Contact — double-click">
+      <div class="icon-img">📬</div><span class="icon-label">Contact</span>
+    </button>
+    <button class="desktop-icon" data-window="window-chatbot"      title="Ask Me Anything — double-click">
+      <div class="icon-img">🤖</div><span class="icon-label">Ask Me</span>
+    </button>
+
+    <!-- Fun / decorative folders -->
+    <button class="desktop-icon" data-window="window-mypc"         title="My PC">
+      <div class="icon-img">🖥️</div><span class="icon-label">My PC</span>
+    </button>
+    <button class="desktop-icon" data-window="window-recycle"      title="Recycle Bin">
+      <div class="icon-img">🗑️</div><span class="icon-label">Recycle Bin</span>
+    </button>
+    <button class="desktop-icon" data-window="window-bored"        title="R U Bored?">
+      <div class="icon-img">😴</div><span class="icon-label">R U Bored?</span>
+    </button>
+    <button class="desktop-icon" data-window="window-didyouknow"   title="Did You Know?">
+      <div class="icon-img">💡</div><span class="icon-label">Did You Know?</span>
+    </button>
+    <button class="desktop-icon" data-window="window-private"      title="Private">
+      <div class="icon-img">🔒</div><span class="icon-label">Private</span>
+    </button>
+    <button class="desktop-icon" data-window="window-terms"        title="Terms & Conditions">
+      <div class="icon-img">📜</div><span class="icon-label">Terms & Conditions</span>
+    </button>
+
+  </nav>
+
+  <!-- Desktop watermark -->
+  <div id="desktop-identity" aria-hidden="true">
+    <h1>Maxson Mathew</h1>
+    <p>Building intelligent systems that matter.</p>
+  </div>
+
+
+  <!-- ============================================================
+       WINDOWS — all start hidden (display:none)
+       ============================================================ -->
+
+
+  <!-- ABOUT -->
+  <article id="window-about" class="os-window" data-icon="👤"
+           style="display:none;width:720px;height:580px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">👤</span>
+      <h2 class="window-title">About — Maxson Mathew</h2>
+      <div class="window-controls">
+        <button class="wc-btn min"   title="Minimise">─</button>
+        <button class="wc-btn max"   title="Maximise">□</button>
+        <button class="wc-btn close" title="Close">✕</button>
+      </div>
+    </header>
+    <div class="window-body">
+      <div class="about-layout">
+        <div class="about-photo-slot">
+          <!-- PHOTO PLACEHOLDER: drop /assets/images/maxson-photo.jpg
+               then replace this span with:
+               <img src="assets/images/maxson-photo.jpg" alt="Maxson Mathew"> -->
+          <span>📷<br>Drop photo<br>here</span>
         </div>
-        <div class="folder-content">
-            <p>About me content goes here...</p>
-            
+        <div class="about-intro">
+          <h2>Maxson Mathew</h2>
+          <div class="role-badge">AI/ML Engineer &amp; Developer</div>
+          <p>I build at the intersection of systems thinking and machine intelligence — the kind of work that requires you to hold both rigour and imagination in the same breath.</p>
+          <p>Currently interning at <strong>Endava</strong> as a Junior Developer, pursuing my BE in AI &amp; ML at BMSIT (CGPA: 9.22), and convinced that the most interesting problems live at the edge of what's been solved before.</p>
         </div>
+      </div>
+      <div class="about-stats-grid">
+        <div class="stat-card"><div class="stat-value">9.22</div><div class="stat-label">CGPA — BE AI/ML</div></div>
+        <div class="stat-card"><div class="stat-value">3k+</div><div class="stat-label">Hackathon Registrations Led</div></div>
+        <div class="stat-card"><div class="stat-value">500+</div><div class="stat-label">Students via E-Cell</div></div>
+      </div>
+      <div class="about-highlights">
+        <div class="highlight-item"><div class="highlight-dot"></div><p><strong>Chief Coordinator — CODE RED 3.0:</strong> Led a 60-member team to run a national 24-hour hackathon with 3,000+ registrations and 1,000+ competing teams.</p></div>
+        <div class="highlight-item"><div class="highlight-dot"></div><p><strong>President — Entrepreneurship Cell:</strong> 35-person team, 10+ large-scale events, built a culture where students build things — not just attend talks.</p></div>
+        <div class="highlight-item"><div class="highlight-dot"></div><p><strong>Junior Under Officer — NCC:</strong> Selected for the Best Cadet Competition. Leadership measured under real conditions, not just listed on a resume.</p></div>
+        <div class="highlight-item"><div class="highlight-dot"></div><p><strong>Published Poet — "White Orchids":</strong> Featured in <em>Floating</em> by Writer's Pocket. The engineer and the poet are the same person. That's a feature, not a bug.</p></div>
+        <div class="highlight-item"><div class="highlight-dot"></div><p><strong>IISc Research Exposure:</strong> Built a real-world ambulance distribution system at CDPG, processing 700k+ traffic data points with 88% operational effectiveness.</p></div>
+      </div>
     </div>
-   <script src ="script.js"></script>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- EXPERIENCE -->
+  <article id="window-experience" class="os-window" data-icon="💼"
+           style="display:none;width:660px;height:480px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">💼</span>
+      <h2 class="window-title">Experience</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button>
+        <button class="wc-btn max">□</button>
+        <button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <div class="window-body">
+      <h3 class="section-heading">Work Experience</h3>
+      <p class="section-subheading">Where I've shipped real things</p>
+      <div class="section-divider"></div>
+      <div class="experience-card">
+        <div class="exp-header">
+          <div><div class="exp-title">Junior Developer Intern</div><div class="exp-company">Endava</div></div>
+          <div class="exp-duration">Jan 2026 – Present</div>
+        </div>
+        <div class="exp-tech-stack">
+          <span class="tech-tag">MySQL</span><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span>
+          <span class="tech-tag">JavaScript</span><span class="tech-tag">Git</span><span class="tech-tag">Agile</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Designed ER diagrams, optimised SQL queries, and authored stored procedures and functions for production database layers.</li>
+          <li>Built and integrated frontend interfaces in a full-stack application — owning both UI and the data contract beneath it.</li>
+          <li>Worked in Agile teams using Git — feature development, debugging, and structured code reviews.</li>
+        </ul>
+      </div>
+      <div class="experience-card" style="margin-top:16px;">
+        <div class="exp-header">
+          <div><div class="exp-title">BE — Artificial Intelligence &amp; Machine Learning</div><div class="exp-company">BMSIT, Bengaluru</div></div>
+          <div class="exp-duration">2022 – Present</div>
+        </div>
+        <div class="exp-tech-stack"><span class="tech-tag">CGPA: 9.22</span></div>
+        <ul class="exp-bullets">
+          <li>Specialising in AI/ML — deep learning, NLP, computer vision, and systems design.</li>
+          <li>Concurrent leadership: E-Cell President, NCC JUO, and national hackathon organiser alongside academic excellence.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- PROJECTS FOLDER — root view -->
+  <article id="window-projects" class="os-window" data-icon="📁"
+           style="display:none;width:680px;height:520px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">📁</span>
+      <h2 class="window-title">Projects</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button>
+        <button class="wc-btn max">□</button>
+        <button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <!-- Address bar -->
+    <div class="folder-address-bar">
+      <span style="opacity:.5">📁</span>
+      <span class="addr-path">This PC &gt; Maxson &gt; Projects</span>
+    </div>
+    <div class="window-body" style="padding:16px;">
+      <div class="folder-view">
+
+        <!-- Each project is a folder that opens a dedicated window -->
+        <div class="folder-item" data-action="open-window" data-target="window-proj-resume" style="cursor:pointer;">
+          <div class="folder-item-icon">📂</div>
+          <div class="folder-item-name">AI-Powered Resume Matcher</div>
+          <div class="folder-item-meta">June 2025 &nbsp;·&nbsp; Python, SBERT, Azure</div>
+        </div>
+
+        <div class="folder-item" data-action="open-window" data-target="window-proj-ambulance" style="cursor:pointer;">
+          <div class="folder-item-icon">📂</div>
+          <div class="folder-item-name">Ambulance Distribution System</div>
+          <div class="folder-item-meta">Feb 2025 &nbsp;·&nbsp; Python, KNN, K-Means</div>
+        </div>
+
+        <div class="folder-item" data-action="open-window" data-target="window-proj-krishi" style="cursor:pointer;">
+          <div class="folder-item-icon">📂</div>
+          <div class="folder-item-name">KrishiDrishti</div>
+          <div class="folder-item-meta">NeuroNova Hackathon &nbsp;·&nbsp; AR/VR &nbsp;·&nbsp; 2nd Place</div>
+        </div>
+
+      </div>
+    </div>
+    <div class="folder-status-bar">3 items</div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- PROJECT DETAIL: Resume Matcher -->
+  <article id="window-proj-resume" class="os-window" data-icon="📄"
+           style="display:none;width:660px;height:520px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">📄</span>
+      <h2 class="window-title">Projects &gt; AI Resume Matcher</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button><button class="wc-btn max">□</button><button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <div class="folder-address-bar">
+      <button class="folder-nav-btn" onclick="WindowManager.close('window-proj-resume');WindowManager.open('window-projects');">← Back</button>
+      <span class="addr-path">Projects &gt; AI-Powered Resume Matcher</span>
+    </div>
+    <div class="window-body">
+      <div class="project-img-slot" style="height:130px;margin-bottom:16px;">
+        <!-- SCREENSHOT: drop assets/images/project-resume-matcher.png and replace this div with <img> -->
+        <div class="project-img-placeholder-text">📄 project-resume-matcher.png</div>
+      </div>
+      <div class="project-meta"><div class="project-title">AI-Powered Resume Matcher</div><div class="project-date">June 2025</div></div>
+      <p class="project-description">Generative AI system that evaluates and ranks resumes against job descriptions using semantic similarity scoring — built end-to-end from PDF extraction to a recruiter-facing Streamlit UI.</p>
+      <div class="folder-view" style="margin-bottom:16px;">
+        <div class="folder-item"><div class="folder-item-icon">📋</div><div class="folder-item-name">Overview.txt</div><div class="folder-item-meta">End-to-end NLP pipeline</div></div>
+        <div class="folder-item"><div class="folder-item-icon">🧠</div><div class="folder-item-name">Model — SBERT Embeddings.py</div><div class="folder-item-meta">Vector similarity scoring</div></div>
+        <div class="folder-item"><div class="folder-item-icon">🖥️</div><div class="folder-item-name">UI — Streamlit App.py</div><div class="folder-item-meta">Recruiter + candidate modes</div></div>
+        <div class="folder-item"><div class="folder-item-icon">☁️</div><div class="folder-item-name">Azure AI Foundry Config</div><div class="folder-item-meta">Generative layer</div></div>
+      </div>
+      <div class="exp-tech-stack">
+        <span class="tech-tag">Python</span><span class="tech-tag">Semantic Kernel</span>
+        <span class="tech-tag">Azure AI Foundry</span><span class="tech-tag">SBERT</span><span class="tech-tag">Streamlit</span>
+      </div>
+      <div style="margin-top:14px;">
+        <!-- GITHUB PLACEHOLDER: replace href="#" with actual repo URL -->
+        <a href="#" class="project-link" target="_blank">↗ View on GitHub</a>
+      </div>
+    </div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- PROJECT DETAIL: Ambulance -->
+  <article id="window-proj-ambulance" class="os-window" data-icon="🚑"
+           style="display:none;width:660px;height:520px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">🚑</span>
+      <h2 class="window-title">Projects &gt; Ambulance Distribution System</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button><button class="wc-btn max">□</button><button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <div class="folder-address-bar">
+      <button class="folder-nav-btn" onclick="WindowManager.close('window-proj-ambulance');WindowManager.open('window-projects');">← Back</button>
+      <span class="addr-path">Projects &gt; Ambulance Distribution System</span>
+    </div>
+    <div class="window-body">
+      <div class="project-img-slot" style="height:130px;margin-bottom:16px;">
+        <!-- SCREENSHOT: drop assets/images/project-ambulance.png -->
+        <div class="project-img-placeholder-text">🚑 project-ambulance.png</div>
+      </div>
+      <div class="project-meta"><div class="project-title">Ambulance Distribution System</div><div class="project-date">Feb 2025 · IISc Bangalore</div></div>
+      <p class="project-description">Data-driven emergency routing system built at IISc Bangalore's CDPG, processing 700,000+ real traffic data points to optimise ambulance placement across a city-scale hub network.</p>
+      <div class="folder-view" style="margin-bottom:16px;">
+        <div class="folder-item"><div class="folder-item-icon">📋</div><div class="folder-item-name">Overview.txt</div><div class="folder-item-meta">700k+ data points, 88% effectiveness</div></div>
+        <div class="folder-item"><div class="folder-item-icon">🗺️</div><div class="folder-item-name">Routing — KNN Model.py</div><div class="folder-item-meta">45+ distribution hubs</div></div>
+        <div class="folder-item"><div class="folder-item-icon">🔵</div><div class="folder-item-name">Clustering — K-Means.py</div><div class="folder-item-meta">Zone optimisation</div></div>
+        <div class="folder-item"><div class="folder-item-icon">🔄</div><div class="folder-item-name">Retraining Pipeline.py</div><div class="folder-item-meta">Real-time accuracy maintenance</div></div>
+      </div>
+      <div class="exp-tech-stack">
+        <span class="tech-tag">Python</span><span class="tech-tag">Streamlit</span><span class="tech-tag">KNN</span><span class="tech-tag">K-Means</span>
+      </div>
+      <div style="margin-top:14px;">
+        <!-- GITHUB PLACEHOLDER: replace href="#" -->
+        <a href="#" class="project-link" target="_blank">↗ View on GitHub</a>
+      </div>
+    </div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- PROJECT DETAIL: KrishiDrishti -->
+  <article id="window-proj-krishi" class="os-window" data-icon="🌾"
+           style="display:none;width:620px;height:460px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">🌾</span>
+      <h2 class="window-title">Projects &gt; KrishiDrishti</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button><button class="wc-btn max">□</button><button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <div class="folder-address-bar">
+      <button class="folder-nav-btn" onclick="WindowManager.close('window-proj-krishi');WindowManager.open('window-projects');">← Back</button>
+      <span class="addr-path">Projects &gt; KrishiDrishti</span>
+    </div>
+    <div class="window-body">
+      <div class="project-img-slot" style="height:130px;margin-bottom:16px;">
+        <!-- SCREENSHOT: drop assets/images/project-krishidrishti.png -->
+        <div class="project-img-placeholder-text">🌾 project-krishidrishti.png</div>
+      </div>
+      <div class="project-meta"><div class="project-title">KrishiDrishti</div><div class="project-date">NeuroNova Hackathon · 2nd Place</div></div>
+      <p class="project-description">AR-enabled precision farming system that gives farmers real-time field intelligence through augmented overlays. Won 2nd Place in the AR/VR Track at NeuroNova Hackathon.</p>
+      <div class="folder-view" style="margin-bottom:16px;">
+        <div class="folder-item"><div class="folder-item-icon">📋</div><div class="folder-item-name">Overview.txt</div><div class="folder-item-meta">AR/VR precision farming</div></div>
+        <!-- More detail files to be added when available -->
+        <div class="folder-item" style="opacity:.5;"><div class="folder-item-icon">⏳</div><div class="folder-item-name">More details coming soon...</div></div>
+      </div>
+      <div class="exp-tech-stack"><span class="tech-tag">AR/VR</span></div>
+      <div style="margin-top:14px;">
+        <!-- GITHUB PLACEHOLDER -->
+        <a href="#" class="project-link" target="_blank">↗ View on GitHub</a>
+      </div>
+    </div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- SIDE PROJECTS FOLDER -->
+  <article id="window-side-projects" class="os-window" data-icon="🧪"
+           style="display:none;width:680px;height:500px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">🧪</span>
+      <h2 class="window-title">Side Projects</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button><button class="wc-btn max">□</button><button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <div class="folder-address-bar">
+      <span style="opacity:.5">🧪</span>
+      <span class="addr-path">This PC &gt; Maxson &gt; Side Projects</span>
+    </div>
+    <div class="window-body" style="padding:16px;">
+      <p style="margin-bottom:16px;font-size:0.82rem;color:var(--text-muted);">
+        Small experiments, weekend builds, and works-in-progress.
+        Not polished — just real.
+      </p>
+      <div class="folder-view">
+
+        <div class="folder-item" data-action="open-window" data-target="window-sp-ipl" style="cursor:pointer;">
+          <div class="folder-item-icon">🏏</div>
+          <div class="folder-item-name">IPL Win Predictor</div>
+          <div class="folder-item-meta">ML model · In progress</div>
+        </div>
+
+        <div class="folder-item" data-action="open-window" data-target="window-sp-rag" style="cursor:pointer;">
+          <div class="folder-item-icon">🔍</div>
+          <div class="folder-item-name">RAG Pipeline from Scratch</div>
+          <div class="folder-item-meta">No LangChain · Vector store · In progress</div>
+        </div>
+
+        <div class="folder-item" data-action="open-window" data-target="window-sp-llmeval" style="cursor:pointer;">
+          <div class="folder-item-icon">📊</div>
+          <div class="folder-item-name">LLM Evaluation Framework</div>
+          <div class="folder-item-meta">Hallucination scoring · In progress</div>
+        </div>
+
+      </div>
+    </div>
+    <div class="folder-status-bar">3 items</div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- SIDE PROJECT: IPL Predictor -->
+  <article id="window-sp-ipl" class="os-window" data-icon="🏏"
+           style="display:none;width:620px;height:440px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">🏏</span>
+      <h2 class="window-title">Side Projects &gt; IPL Win Predictor</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button><button class="wc-btn max">□</button><button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <div class="folder-address-bar">
+      <button class="folder-nav-btn" onclick="WindowManager.close('window-sp-ipl');WindowManager.open('window-side-projects');">← Back</button>
+      <span class="addr-path">Side Projects &gt; IPL Win Predictor</span>
+    </div>
+    <div class="window-body">
+      <div class="project-meta" style="margin-bottom:12px;"><div class="project-title">🏏 IPL Win Predictor</div><div class="project-date" style="color:var(--accent-highlight);">In Progress</div></div>
+      <p class="project-description">ML model that predicts IPL match win probabilities — trained on historical match data, ball-by-ball stats, player form, and venue conditions. Goal: live win probability updated per over.</p>
+      <div class="folder-view" style="margin-bottom:14px;">
+        <div class="folder-item"><div class="folder-item-icon">📋</div><div class="folder-item-name">Overview.txt</div></div>
+        <div class="folder-item"><div class="folder-item-icon">🗃️</div><div class="folder-item-name">Data — Historical Matches.csv</div></div>
+        <div class="folder-item"><div class="folder-item-icon">🤖</div><div class="folder-item-name">Model — XGBoost Classifier.py</div></div>
+        <div class="folder-item"><div class="folder-item-icon">📈</div><div class="folder-item-name">Live Probability UI.py</div><div class="folder-item-meta">Coming soon</div></div>
+      </div>
+      <div class="exp-tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">XGBoost</span><span class="tech-tag">Pandas</span><span class="tech-tag">Streamlit</span></div>
+    </div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- SIDE PROJECT: RAG Pipeline -->
+  <article id="window-sp-rag" class="os-window" data-icon="🔍"
+           style="display:none;width:620px;height:460px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">🔍</span>
+      <h2 class="window-title">Side Projects &gt; RAG Pipeline</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button><button class="wc-btn max">□</button><button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <div class="folder-address-bar">
+      <button class="folder-nav-btn" onclick="WindowManager.close('window-sp-rag');WindowManager.open('window-side-projects');">← Back</button>
+      <span class="addr-path">Side Projects &gt; RAG Pipeline from Scratch</span>
+    </div>
+    <div class="window-body">
+      <div class="project-meta" style="margin-bottom:12px;"><div class="project-title">🔍 RAG Pipeline from Scratch</div><div class="project-date" style="color:var(--accent-highlight);">In Progress</div></div>
+      <p class="project-description">Retrieval-Augmented Generation pipeline built from first principles — no LangChain, no magic wrappers. Just raw embeddings, a vector store, retrieval logic, and a generation step on top. The goal: deeply understand how RAG actually works, not just how to call it.</p>
+      <div class="folder-view" style="margin-bottom:14px;">
+        <div class="folder-item"><div class="folder-item-icon">📋</div><div class="folder-item-name">Overview.txt</div></div>
+        <div class="folder-item"><div class="folder-item-icon">🔢</div><div class="folder-item-name">Embeddings — SBERT Encoder.py</div></div>
+        <div class="folder-item"><div class="folder-item-icon">🗄️</div><div class="folder-item-name">Vector Store — FAISS Index.py</div></div>
+        <div class="folder-item"><div class="folder-item-icon">🔎</div><div class="folder-item-name">Retrieval Logic.py</div></div>
+        <div class="folder-item"><div class="folder-item-icon">✍️</div><div class="folder-item-name">Generation — LLM Layer.py</div></div>
+      </div>
+      <div class="exp-tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">SBERT</span><span class="tech-tag">FAISS</span><span class="tech-tag">Hugging Face</span></div>
+    </div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- SIDE PROJECT: LLM Eval -->
+  <article id="window-sp-llmeval" class="os-window" data-icon="📊"
+           style="display:none;width:620px;height:460px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">📊</span>
+      <h2 class="window-title">Side Projects &gt; LLM Eval Framework</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button><button class="wc-btn max">□</button><button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <div class="folder-address-bar">
+      <button class="folder-nav-btn" onclick="WindowManager.close('window-sp-llmeval');WindowManager.open('window-side-projects');">← Back</button>
+      <span class="addr-path">Side Projects &gt; LLM Evaluation Framework</span>
+    </div>
+    <div class="window-body">
+      <div class="project-meta" style="margin-bottom:12px;"><div class="project-title">📊 LLM Evaluation Framework</div><div class="project-date" style="color:var(--accent-highlight);">In Progress</div></div>
+      <p class="project-description">Automated system that scores LLM outputs across multiple quality dimensions: factual accuracy, hallucination rate, instruction following, tone consistency, and output length compliance. Built because "vibes" is not a valid eval strategy.</p>
+      <div class="folder-view" style="margin-bottom:14px;">
+        <div class="folder-item"><div class="folder-item-icon">📋</div><div class="folder-item-name">Overview.txt</div></div>
+        <div class="folder-item"><div class="folder-item-icon">🎯</div><div class="folder-item-name">Accuracy Scorer.py</div></div>
+        <div class="folder-item"><div class="folder-item-icon">👻</div><div class="folder-item-name">Hallucination Detector.py</div></div>
+        <div class="folder-item"><div class="folder-item-icon">📝</div><div class="folder-item-name">Instruction Follow Eval.py</div></div>
+        <div class="folder-item"><div class="folder-item-icon">📊</div><div class="folder-item-name">Dashboard — Results.py</div></div>
+      </div>
+      <div class="exp-tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">LLM APIs</span><span class="tech-tag">Pandas</span><span class="tech-tag">Streamlit</span></div>
+    </div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- SKILLS -->
+  <article id="window-skills" class="os-window" data-icon="⚙️"
+           style="display:none;width:620px;height:500px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">⚙️</span>
+      <h2 class="window-title">Skills</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button><button class="wc-btn max">□</button><button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <div class="window-body">
+      <h3 class="section-heading">Technical Skills</h3>
+      <p class="section-subheading">Tools I reach for when things need to get built</p>
+      <div class="section-divider"></div>
+      <div class="skills-categories">
+        <div><div class="skill-category-title">Languages &amp; Databases</div>
+          <div class="skill-tags-cluster"><span class="skill-tag">Python</span><span class="skill-tag">C</span><span class="skill-tag">Java</span><span class="skill-tag">MySQL</span><span class="skill-tag">PostgreSQL</span><span class="skill-tag">HTML</span><span class="skill-tag">CSS</span><span class="skill-tag">JavaScript</span></div>
+        </div>
+        <div><div class="skill-category-title">AI / ML Frameworks</div>
+          <div class="skill-tags-cluster"><span class="skill-tag">PyTorch</span><span class="skill-tag">TensorFlow</span><span class="skill-tag">Hugging Face Transformers</span><span class="skill-tag">Scikit-learn</span><span class="skill-tag">NumPy</span><span class="skill-tag">Pandas</span></div>
+        </div>
+        <div><div class="skill-category-title">Generative AI &amp; NLP</div>
+          <div class="skill-tags-cluster"><span class="skill-tag">LLMs (GPT, BERT)</span><span class="skill-tag">Prompt Engineering</span><span class="skill-tag">Semantic Kernel</span><span class="skill-tag">SBERT</span><span class="skill-tag">Vector Embeddings</span></div>
+        </div>
+        <div><div class="skill-category-title">Tools &amp; Platforms</div>
+          <div class="skill-tags-cluster"><span class="skill-tag">Git</span><span class="skill-tag">Azure AI Foundry</span><span class="skill-tag">Streamlit</span><span class="skill-tag">VS Code</span><span class="skill-tag">FAISS</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- ACHIEVEMENTS -->
+  <article id="window-achievements" class="os-window" data-icon="🏆"
+           style="display:none;width:640px;height:560px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">🏆</span>
+      <h2 class="window-title">Achievements</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button><button class="wc-btn max">□</button><button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <div class="window-body">
+      <h3 class="section-heading">Achievements</h3>
+      <p class="section-subheading">Wins, recognition &amp; moments that matter</p>
+      <div class="section-divider"></div>
+      <div class="achievements-list">
+        <div class="achievement-item"><div class="achievement-medal">🏆</div><div class="achievement-info"><h4>Overall Champion — Reva University</h4><p>Won across all four events: Maths, Coding Quiz, Debate, and Cubing.</p></div></div>
+        <div class="achievement-item"><div class="achievement-medal">🥈</div><div class="achievement-info"><h4>2nd Place — NeuroNova Hackathon (AR/VR Track)</h4><p>Built KrishiDrishti, an AR-enabled precision farming system.</p></div></div>
+        <div class="achievement-item"><div class="achievement-medal">🥉</div><div class="achievement-info"><h4>3rd Place — Enfinity Startup Festival, Business Triathlon @ NMIT</h4><p>Entrepreneurial thinking under competition conditions.</p></div></div>
+        <div class="achievement-item"><div class="achievement-medal">🎙️</div><div class="achievement-info"><h4>Chief Coordinator — CODE RED 3.0</h4><p>National 24-hour hackathon: 3,000+ registrations, 1,000+ teams, 60-member organising team.</p></div></div>
+        <div class="achievement-item"><div class="achievement-medal">📖</div><div class="achievement-info"><h4>Published Poet — "White Orchids" in <em>Floating</em></h4><p>Featured in the anthology by Writer's Pocket.</p></div></div>
+      </div>
+      <h4 class="skill-category-title" style="margin-bottom:12px;">Certifications</h4>
+      <div class="certs-section">
+        <div class="cert-item"><div class="cert-icon">📜</div><div class="cert-info"><h5>Software Engineering Fundamentals</h5><span>Infosys Springboard · Feb 2025</span></div></div>
+        <div class="cert-item"><div class="cert-icon">🤖</div><div class="cert-info"><h5>Prompt Engineering</h5><span>Infosys Springboard · Oct 2024</span></div></div>
+        <div class="cert-item"><div class="cert-icon">📊</div><div class="cert-info"><h5>Data Analysis</h5><span>365 Data Science · Nov 2024</span></div></div>
+      </div>
+    </div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- CONTACT -->
+  <article id="window-contact" class="os-window" data-icon="📬"
+           style="display:none;width:540px;height:460px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">📬</span>
+      <h2 class="window-title">Contact</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button><button class="wc-btn max">□</button><button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <div class="window-body">
+      <h3 class="section-heading">Get in Touch</h3>
+      <p class="section-subheading">Open to opportunities &amp; good conversations</p>
+      <div class="section-divider"></div>
+      <p>Whether you're building something interesting, have a role you think fits, or just want to talk AI — reach out.</p>
+      <div class="contact-layout">
+        <a href="mailto:mailtomaxson@gmail.com" class="contact-item"><div class="contact-icon">📧</div><div class="contact-info"><h4>Email</h4><p>mailtomaxson@gmail.com</p></div></a>
+        <a href="https://github.com/maxx1404" target="_blank" rel="noopener" class="contact-item"><div class="contact-icon">🐙</div><div class="contact-info"><h4>GitHub</h4><p>github.com/maxx1404</p></div></a>
+        <a href="https://linkedin.com/in/maxson-mathew-9022082b1" target="_blank" rel="noopener" class="contact-item"><div class="contact-icon">💼</div><div class="contact-info"><h4>LinkedIn</h4><p>maxson-mathew-9022082b1</p></div></a>
+        <a href="tel:+918867162414" class="contact-item"><div class="contact-icon">📱</div><div class="contact-info"><h4>Phone</h4><p>+91 88671 62414</p></div></a>
+        <!-- RESUME PLACEHOLDER: drop PDF into /assets/resume/Maxson_Mathew_Resume.pdf -->
+        <a href="assets/resume/Maxson_Mathew_Resume.pdf" class="contact-resume-btn" download>⬇ Download Resume</a>
+      </div>
+    </div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- CHATBOT -->
+  <article id="window-chatbot" class="os-window" data-icon="🤖"
+           style="display:none;width:560px;height:520px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">🤖</span>
+      <h2 class="window-title">Ask Me Anything — AI Assistant</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button><button class="wc-btn max">□</button><button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <!-- API key notice — hidden once real key is set -->
+    <div id="chat-api-notice" class="chat-api-notice">
+      ⚠ Fallback mode — add your Anthropic API key in js/config.js for full AI responses.
+      Get a free key at console.anthropic.com
+    </div>
+    <div class="chat-layout">
+      <div id="chat-messages" class="chat-messages"></div>
+      <!-- Quick suggestion chips -->
+      <div class="chat-suggestions">
+        <button class="chat-suggestion-btn" data-question="What are Maxson's top projects?">Top projects</button>
+        <button class="chat-suggestion-btn" data-question="What is Maxson's CGPA?">CGPA</button>
+        <button class="chat-suggestion-btn" data-question="What skills does Maxson have?">Skills</button>
+        <button class="chat-suggestion-btn" data-question="Is Maxson available for hire?">Available?</button>
+        <button class="chat-suggestion-btn" data-question="Tell me something surprising about Maxson">Surprise me</button>
+      </div>
+      <div class="chat-input-row">
+        <input type="text" id="chat-input" class="chat-input" placeholder="Ask anything about Maxson..." autocomplete="off" />
+        <button id="chat-send-btn" class="chat-send-btn">Send</button>
+      </div>
+    </div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- FUN: MY PC -->
+  <article id="window-mypc" class="os-window" data-icon="🖥️"
+           style="display:none;width:580px;height:440px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">🖥️</span>
+      <h2 class="window-title">My PC</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button><button class="wc-btn max">□</button><button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <div class="folder-address-bar"><span class="addr-path">This PC &gt; System Information</span></div>
+    <div class="window-body">
+      <div class="fun-content">
+        <h3>System Information</h3>
+        <div class="mono-block">
+OS:           Maxson OS v2.0 (Bengaluru Edition)<br>
+Processor:    Human Brain @ variable GHz<br>
+RAM:          Enough to run 3 leadership roles simultaneously<br>
+Storage:      9.22 GPA of knowledge + 700k+ data points processed<br>
+GPU:          Creative cortex — optimised for poetry and ML<br>
+Network:      3000+ connections (hackathon registrants)<br>
+Uptime:       22 years<br>
+Battery:      Charges on chai and IPL matches<br>
+Antivirus:    NCC discipline — threats neutralised at source<br>
+Last update:  Jan 2026 — Endava internship patch applied<br>
+Status:       ✅ Running optimally
+        </div>
+        <p style="font-size:0.78rem;color:var(--text-muted);">
+          Device Manager shows no errors. All systems nominal.
+        </p>
+      </div>
+    </div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- FUN: RECYCLE BIN -->
+  <article id="window-recycle" class="os-window" data-icon="🗑️"
+           style="display:none;width:560px;height:400px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">🗑️</span>
+      <h2 class="window-title">Recycle Bin</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button><button class="wc-btn max">□</button><button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <div class="folder-address-bar"><span class="addr-path">Recycle Bin</span></div>
+    <div class="window-body" style="padding:16px;">
+      <div class="folder-view">
+        <div class="folder-item"><div class="folder-item-icon">🗒️</div><div class="folder-item-name">Bad commit messages (2022).txt</div><div class="folder-item-meta">142 KB</div></div>
+        <div class="folder-item"><div class="folder-item-icon">💤</div><div class="folder-item-name">Tutorial hell phase.exe</div><div class="folder-item-meta">Deleted 2023</div></div>
+        <div class="folder-item"><div class="folder-item-icon">😰</div><div class="folder-item-name">Imposter syndrome — first hackathon.doc</div><div class="folder-item-meta">Permanently deleted</div></div>
+        <div class="folder-item"><div class="folder-item-icon">📉</div><div class="folder-item-name">First ML model (97% train, 54% test).py</div><div class="folder-item-meta">The classic</div></div>
+        <div class="folder-item"><div class="folder-item-icon">🌀</div><div class="folder-item-name">Infinite loop that crashed my laptop.c</div><div class="folder-item-meta">Never forget</div></div>
+        <div class="folder-item"><div class="folder-item-icon">💡</div><div class="folder-item-name">12 startup ideas (half-baked).txt</div><div class="folder-item-meta">Recycled 2024</div></div>
+      </div>
+    </div>
+    <div class="folder-status-bar">Recycle Bin contains items — 6 items, 0 bytes (it's all just growth)</div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- FUN: R U BORED? -->
+  <article id="window-bored" class="os-window" data-icon="😴"
+           style="display:none;width:540px;height:460px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">😴</span>
+      <h2 class="window-title">R U Bored?</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button><button class="wc-btn max">□</button><button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <div class="window-body">
+      <div class="fun-content">
+        <h3>So you're bored.</h3>
+        <p>Respect. Here are some things you could do instead of looking at portfolios:</p>
+        <div class="mono-block">
+Option A → Open the chatbot and ask it something weird<br>
+Option B → Right-click the desktop<br>
+Option C → Try to find the Private folder<br>
+Option D → Drag all the icons to the right side<br>
+Option E → Open every window at once<br>
+Option F → Hire Maxson (most productive use of your time)
+        </div>
+        <p>Or... just sit with the boredom. It's where the good ideas come from.</p>
+        <p style="font-size:0.78rem;color:var(--accent-primary);margin-top:8px;">
+          — Maxson, who once wrote a poem about debugging at 2am
+        </p>
+      </div>
+    </div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- FUN: DID YOU KNOW? -->
+  <article id="window-didyouknow" class="os-window" data-icon="💡"
+           style="display:none;width:560px;height:480px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">💡</span>
+      <h2 class="window-title">Did You Know?</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button><button class="wc-btn max">□</button><button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <div class="window-body">
+      <div class="fun-content">
+        <h3>Things you might not know about Maxson</h3>
+        <div class="mono-block">
+💡 He is a published poet AND an ML engineer.<br>
+   (Yes, the same brain. No, it's not a bug.)<br><br>
+💡 He's processed more data (700k+ points) than<br>
+   most developers his age have ever seen.<br><br>
+💡 He once led a 60-person team. At college age.<br>
+   For a national hackathon. Without losing it.<br><br>
+💡 His CGPA is 9.22. Results just came in.<br>
+   He's trying to stay calm about it.<br><br>
+💡 He was selected for Best Cadet Competition (NCC).<br>
+   Turns out discipline is a competitive advantage.<br><br>
+💡 He built this entire portfolio OS from scratch.<br>
+   Plain HTML, CSS, and JS. No frameworks. No tools.<br>
+   Just craft.
+        </div>
+      </div>
+    </div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- FUN: PRIVATE FOLDER -->
+  <article id="window-private" class="os-window" data-icon="🔒"
+           style="display:none;width:480px;height:340px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">🔒</span>
+      <h2 class="window-title">Private</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button><button class="wc-btn max">□</button><button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <div class="window-body" style="display:flex;align-items:center;justify-content:center;height:100%;">
+      <div class="fun-content" style="text-align:center;">
+        <div style="font-size:3rem;margin-bottom:16px;">🔒</div>
+        <h3>Access Denied</h3>
+        <p style="margin-top:12px;">You don't have permission to view this folder.</p>
+        <p style="font-size:0.78rem;color:var(--text-muted);margin-top:8px;">
+          (There's nothing here. Or is there? The uncertainty is the point.)
+        </p>
+        <div class="mono-block" style="margin-top:16px;text-align:left;">
+Error 403: Forbidden<br>
+Path: /private<br>
+User: Visitor<br>
+Required clearance: Maxson
+        </div>
+      </div>
+    </div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+  <!-- FUN: TERMS & CONDITIONS -->
+  <article id="window-terms" class="os-window" data-icon="📜"
+           style="display:none;width:600px;height:500px;" role="dialog" aria-modal="true">
+    <header class="window-header">
+      <span class="window-header-icon">📜</span>
+      <h2 class="window-title">Terms &amp; Conditions — Maxson OS</h2>
+      <div class="window-controls">
+        <button class="wc-btn min">─</button><button class="wc-btn max">□</button><button class="wc-btn close">✕</button>
+      </div>
+    </header>
+    <div class="window-body">
+      <div class="fun-content">
+        <h3>Terms &amp; Conditions of Using This Portfolio</h3>
+        <p style="font-size:0.72rem;color:var(--text-muted);">Last updated: Now. Effective: Immediately. Binding: Morally.</p>
+        <div class="mono-block">
+1. By viewing this portfolio, you agree that it is,<br>
+   in fact, a portfolio and not a real operating system.<br><br>
+2. You may drag windows. You may not throw them.<br><br>
+3. The chatbot may be used to ask about Maxson.<br>
+   It may not be used to ask about cryptocurrency.<br><br>
+4. You agree that a 9.22 CGPA is actually impressive<br>
+   and not just a number.<br><br>
+5. Right-clicking the desktop is encouraged.<br>
+   It is a feature, not a bug.<br><br>
+6. If you find this portfolio impressive, you are<br>
+   legally obligated to reach out at:<br>
+   mailtomaxson@gmail.com<br><br>
+7. If you find a bug, it is intentional. Probably.<br><br>
+8. Maxson reserves the right to update his CGPA.<br>
+   (It can only go up from here.)<br><br>
+9. The Private folder is private. These terms do<br>
+   not grant you access to it.<br><br>
+10. Thank you for reading the Terms &amp; Conditions.<br>
+    You are one of approximately 3 people who ever do.
+        </div>
+        <p style="font-size:0.72rem;color:var(--text-muted);margin-top:8px;">
+          By closing this window, you accept all terms. No opt-out available.
+        </p>
+      </div>
+    </div>
+    <div class="window-resize-handle"></div>
+  </article>
+
+
+</main><!-- /#desktop -->
+
+
+<!-- ============================================================
+     TASKBAR
+     ============================================================ -->
+<footer id="taskbar" role="navigation">
+  <div id="taskbar-logo">
+    <div class="logo-dot"></div>
+    <span class="logo-text">Maxson Mathew</span>
+  </div>
+  <div class="taskbar-sep"></div>
+  <div id="taskbar-windows" role="list"></div>
+  <div class="taskbar-sep"></div>
+  <div id="taskbar-controls">
+    <button id="theme-toggle"><span>⚡</span> Electric</button>
+    <div class="taskbar-sep"></div>
+    <a href="https://github.com/maxx1404" class="taskbar-icon-link" target="_blank" rel="noopener" title="GitHub">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+    </a>
+    <a href="https://linkedin.com/in/maxson-mathew-9022082b1" class="taskbar-icon-link" target="_blank" rel="noopener" title="LinkedIn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <div class="taskbar-sep"></div>
+    <time id="taskbar-clock">00:00:00</time>
+  </div>
+</footer>
+
+<!-- RIGHT-CLICK CONTEXT MENU -->
+<div id="context-menu" role="menu" aria-label="Context menu"></div>
+
+<!-- SCRIPTS — order matters -->
+<script src="js/config.js"></script>
+<script src="js/background.js"></script>
+<script src="js/chatbot.js"></script>
+<script src="js/contextmenu.js"></script>
+<script src="js/main.js"></script>
+
 </body>
 </html>
