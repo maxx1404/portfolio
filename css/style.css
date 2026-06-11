@@ -181,28 +181,68 @@ code, pre   { font-family: var(--font-mono); }
 #desktop {
   position: fixed;
   inset: 0;
-  bottom: 44px;
-  background-color: var(--bg-wallpaper);
   overflow: hidden;
-  transition: background-color 0.5s ease;
+  isolation: isolate; /* Create a new stacking context for the wallpaper layers */
 }
 
+
+#desktop::before{
+  content: '';
+  position: absolute;
+  inset: 0;
+
+  background-image: url("../assets/images/daywallpaper.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+
+  transition:
+  background-image 0.8s ease,
+  filter 0.8s ease;
+}
+
+
+html[data-theme="electric"] #desktop::before {
+  background-image: url("../assets/images/nightwallpaper.png"); 
+}
+
+
+#desktop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.12);
+  pointer-events: none;
+  z-index: 1;
+
+}
+
+html[data-theme="electric"] #desktop::after {
+  background: rgba(0,0,0,0.25);
+}
 /* Animated canvas background — full desktop */
 #bg-canvas {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
   pointer-events: none;
-  z-index: 0;
+  z-index: 2;
 }
 
 /* Everything above the canvas */
-#icon-grid,
-.os-window,
+#icon-grid {
+  position: absolute;
+  z-index: 10;
+}
+
+
+.os-window{
+  z-index: 20;
+}
+
 #desktop-identity {
-  position: relative;
-  z-index: 1;
+  z-index: 50;
 }
 
 #desktop-identity {
@@ -248,7 +288,7 @@ code, pre   { font-family: var(--font-mono); }
   display: grid;
   grid-template-columns: repeat(3, 80px);
   gap: 8px 16px;
-  z-index: 10;
+  z-index: 155;
   /* Icons are individually positioned when draggable mode kicks in */
 }
 
@@ -295,7 +335,8 @@ code, pre   { font-family: var(--font-mono); }
   font-size: 32px;
   line-height: 1;
   /* Drop shadow for visibility on any wallpaper */
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.9))
+  drop-shadow(0 0 12px rgba(0,0,0,0.8));
   transition: transform 0.1s ease;
 }
 
@@ -312,8 +353,12 @@ code, pre   { font-family: var(--font-mono); }
   text-align: center;
   line-height: 1.3;
   text-shadow:
-    1px 1px 2px rgba(0,0,0,0.9),
-    0 0 6px rgba(0,0,0,0.8);
+    0 0 8px rgba(0,0,0,1),
+    1px 1px 0 rgba(0,0,0,1),
+    -1px -1px 0 rgba(0,0,0,1),
+    1px -1px 0 rgba(0,0,0,1),
+    -1px 1px 0 rgba(0,0,0,1),
+    0 2px 6px rgba(0,0,0,0.9);
   letter-spacing: 0.01em;
   max-width: 72px;
   word-break: break-word;
@@ -349,7 +394,7 @@ code, pre   { font-family: var(--font-mono); }
   box-shadow: var(--window-shadow);
   display: flex;
   flex-direction: column;
-  z-index: 100;
+  z-index: 122;
   overflow: auto;
   animation: windowOpen 0.18s cubic-bezier(0.2, 0, 0.2, 1) forwards;
   resize: both;
@@ -583,7 +628,7 @@ code, pre   { font-family: var(--font-mono); }
 .project-img-slot { width:100%; height:140px; background:var(--bg-window-header); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-family:var(--font-mono); font-size:10px; text-align:center; position:relative; overflow:hidden; }
 .project-img-slot img { width:100%; height:100%; object-fit:cover; }
 .project-img-slot::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg, var(--accent-glow) 0%, transparent 60%); opacity:0.4; pointer-events:none; }
-.project-img-placeholder-text { position:relative; z-index:1; }
+.project-img-placeholder-text { position:relative; z-index:111; }
 .project-body { padding:14px 16px 16px; }
 .project-meta { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
 .project-title { font-family:var(--font-display); font-size:1rem; font-weight:700; color:var(--text-primary); }
@@ -821,7 +866,7 @@ code, pre   { font-family: var(--font-mono); }
 
 #context-menu {
   position: fixed;
-  z-index: 9999;
+  z-index: 40;
   min-width: 200px;
   background: var(--bg-window-header);
   border: 1px solid var(--window-border);
@@ -891,7 +936,7 @@ code, pre   { font-family: var(--font-mono); }
   align-items: center;
   padding: 0 16px;
   gap: 10px;
-  z-index: 1000;
+  z-index: 30;
   transition: background 0.5s ease;
   animation: taskbarUp 0.4s ease 0.2s forwards;
   opacity: 0;
