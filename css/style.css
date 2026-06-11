@@ -246,7 +246,7 @@ code, pre   { font-family: var(--font-mono); }
   top: 20px;
   left: 20px;
   display: grid;
-  grid-template-columns: repeat(2, 80px);
+  grid-template-columns: repeat(3, 80px);
   gap: 8px 16px;
   z-index: 10;
   /* Icons are individually positioned when draggable mode kicks in */
@@ -350,8 +350,9 @@ code, pre   { font-family: var(--font-mono); }
   display: flex;
   flex-direction: column;
   z-index: 100;
-  overflow: hidden;
+  overflow: auto;
   animation: windowOpen 0.18s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+  resize: both;
 }
 
 @keyframes windowOpen {
@@ -465,8 +466,7 @@ code, pre   { font-family: var(--font-mono); }
   right: 0;
   width: 14px;
   height: 14px;
-  cursor: se-resize;
-  z-index: 10;
+  cursor: nwse-resize;
 }
 
 .window-resize-handle::after {
