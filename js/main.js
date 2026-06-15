@@ -45,8 +45,8 @@ const ThemeManager = (() => {
     const btn = document.getElementById('theme-toggle');
     if (!btn) return;
     btn.innerHTML = theme === 'forest'
-      ? '<span>⚡</span> Electric'
-      : '<span>🌿</span> Forest';
+      ? '<span>⚡</span> Night'
+      : '<span>🌿</span> Day';
   }
 
   function init() {
