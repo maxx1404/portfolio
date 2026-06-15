@@ -585,13 +585,73 @@
       <div class="section-divider"></div>
       <p>Whether you're building something interesting, have a role you think fits, or just want to talk AI — reach out.</p>
       <div class="contact-layout">
-        <a href="mailto:mailtomaxson@gmail.com" class="contact-item"><div class="contact-icon">📧</div><div class="contact-info"><h4>Email</h4><p>mailtomaxson@gmail.com</p></div></a>
-        <a href="https://github.com/maxx1404" target="_blank" rel="noopener" class="contact-item"><div class="contact-icon">🐙</div><div class="contact-info"><h4>GitHub</h4><p>github.com/maxx1404</p></div></a>
-        <a href="https://linkedin.com/in/maxson-mathew-9022082b1" target="_blank" rel="noopener" class="contact-item"><div class="contact-icon">💼</div><div class="contact-info"><h4>LinkedIn</h4><p>maxson-mathew-9022082b1</p></div></a>
-        <a href="tel:+918867162414" class="contact-item"><div class="contact-icon">📱</div><div class="contact-info"><h4>Phone</h4><p>+91 88671 62414</p></div></a>
-        <!-- RESUME PLACEHOLDER: drop PDF into /assets/resume/Maxson_Mathew_Resume.pdf -->
-        <a href="assets/resume/Maxson_Mathew_Resume.pdf" class="contact-resume-btn" download>⬇ Download Resume</a>
-      </div>
+
+              <a href="mailto:mailtomaxson@gmail.com"
+                class="contact-item"
+                onclick="track('contact_click',{method:'email'})">
+
+              <div class="contact-icon">📧</div>
+              <div class="contact-info">
+              <h4>Email</h4>
+              <p>mailtomaxson@gmail.com</p>
+              </div>
+
+              </a>
+
+
+              <a href="https://github.com/maxx1404"
+                target="_blank"
+                rel="noopener"
+                class="contact-item"
+                onclick="track('contact_click',{method:'github'})">
+
+              <div class="contact-icon">🐙</div>
+              <div class="contact-info">
+              <h4>GitHub</h4>
+              <p>github.com/maxx1404</p>
+              </div>
+
+              </a>
+
+
+              <a href="https://linkedin.com/in/maxson-mathew-9022082b1"
+                target="_blank"
+                rel="noopener"
+                class="contact-item"
+                onclick="track('contact_click',{method:'linkedin'})">
+
+              <div class="contact-icon">💼</div>
+              <div class="contact-info">
+              <h4>LinkedIn</h4>
+              <p>maxson-mathew-9022082b1</p>
+              </div>
+
+              </a>
+
+
+              <a href="tel:+918867162414"
+                class="contact-item"
+                onclick="track('contact_click',{method:'phone'})">
+
+              <div class="contact-icon">📱</div>
+              <div class="contact-info">
+              <h4>Phone</h4>
+              <p>+91 88671 62414</p>
+              </div>
+
+              </a>
+
+
+              <a href="assets/resume/Maxson_Mathew_Resume.pdf"
+                class="contact-resume-btn"
+                download
+                onclick="track('resume_download')">
+
+              ⬇ Download Resume
+
+              </a>
+
+              </div>
     </div>
     <div class="window-resize-handle"></div>
   </article>

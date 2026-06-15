@@ -16,6 +16,18 @@
 
 'use strict';
 
+function track(eventName, params = {}) {
+  if (typeof gtag !== 'undefined') {
+    gtag('event', eventName, params);
+  }
+
+  if (typeof clarity === 'function') {
+    clarity('event', eventName, params);
+  }
+
+  console.log('TRACK:', eventName, params);
+}
+
 /* ============================================================
    1. THEME MANAGER
    ============================================================ */
@@ -37,9 +49,20 @@ const ThemeManager = (() => {
     }
   }
 
-  function toggle() {
-    apply(current === 'forest' ? 'electric' : 'forest');
-  }
+    function toggle() {
+
+      const newTheme =
+        current === 'forest'
+          ? 'electric'
+          : 'forest';
+
+      apply(newTheme);
+
+      track('theme_toggle', {
+        theme: newTheme
+      });
+
+    }
 
   function updateBtn(theme) {
     const btn = document.getElementById('theme-toggle');
@@ -87,6 +110,12 @@ const WindowManager = (() => {
     }
 
     win.style.display = 'flex';
+    track('window_open', {
+      window_name: id,
+      timestamp: Date.now()
+    });
+
+
     win.style.animation = 'none';
     win.offsetHeight;
     win.style.animation = '';
@@ -99,6 +128,12 @@ const WindowManager = (() => {
   function close(winOrId) {
     const win = resolve(winOrId);
     if (!win) return;
+
+    track('window_close', {
+      window_name: win.id,
+      timestamp: Date.now()
+    });
+
     win.style.display = 'none';
     win.classList.remove('is-minimised', 'is-maximised', 'is-focused');
     delete win.dataset.opened;
@@ -460,6 +495,10 @@ const FolderManager = (() => {
       const target = item.dataset.target;
 
       if (action === 'open-window') {
+
+        track('project_open', {
+          project_name: target
+        });
         WindowManager.open(target);
       } else if (action === 'load-view') {
         loadFolderView(item.closest('.os-window'), target);
@@ -580,4 +619,56 @@ document.addEventListener('DOMContentLoaded', () => {
   );
   console.log('%c Right-click the desktop for options.', 'color: #5a8a5a;');
   console.log('%c Double-click icons to open windows.', 'color: #5a8a5a;');
+
+
+  let visitStart = Date.now();
+
+window.addEventListener('beforeunload', () => {
+
+  const duration =
+      Math.round((Date.now() - visitStart) / 1000);
+
+  gtag('event', 'session_duration', {
+    seconds: duration,
+    transport_type: 'beacon'
+   });
+
 });
+
+const source = new URLSearchParams(window.location.search).get('src');
+
+if (source) {
+  track('visitor_source', {
+    source: source
+  });
+}
+
+document.addEventListener('click',(e)=>{
+
+  const tracked =
+    e.target.closest(
+      '.desktop-icon,.folder-item,.contact-item,.contact-resume-btn'
+    );
+
+  if(!tracked) return;
+
+  track('ui_click',{
+      element:
+      tracked.innerText
+      .trim()
+      .substring(0,50)
+  });
+
+});
+
+});
+
+
+
+
+
+
+
+
+
+
