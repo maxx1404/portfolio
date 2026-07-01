@@ -25,66 +25,7 @@ maxson-portfolio/
 └── README.md
 ```
 
----
 
-## Things To Fill In
-
-| Item | File | What to do |
-|------|------|------------|
-| Profile photo | `assets/images/maxson-photo.jpg` | Drop image, uncomment `<img>` tag in About window |
-| Resume PDF | `assets/resume/Maxson_Mathew_Resume.pdf` | Drop PDF — download link is already wired |
-| Project 1 GitHub | `index.html` | Find `<!-- GITHUB LINK PLACEHOLDER — Project 1 -->`, replace `href="#"` |
-| Project 2 GitHub | `index.html` | Find `<!-- GITHUB LINK PLACEHOLDER — Project 2 -->`, replace `href="#"` |
-| Project 3 GitHub | `index.html` | Find `<!-- GITHUB LINK PLACEHOLDER — Project 3 -->`, replace `href="#"` |
-| KrishiDrishti details | `index.html` | Find project 3 card, add bullet points and tech tags |
-| Tagline | `index.html` | Find `#desktop-identity`, update the `<p>` text |
-| Project screenshots | `assets/images/` | Drop PNGs, swap out placeholder divs with `<img>` tags |
-
-All placeholders in the code are marked with prominent comments so they're easy to find.
-
----
-
-## Adding Your Photo
-
-1. Drop your photo into `assets/images/maxson-photo.jpg`  
-2. In `index.html`, find the `PHOTO PLACEHOLDER` comment inside `#window-about`  
-3. Replace the inner `<span>` with:
-   ```html
-   <img src="assets/images/maxson-photo.jpg"
-        alt="Maxson Mathew"
-        style="width:100%; height:100%; object-fit:cover; border-radius:8px;">
-   ```
-
----
-
-## Adding Project Screenshots
-
-For each project, find the `SCREENSHOT PLACEHOLDER` comment and replace the placeholder `<div>` with:
-
-```html
-<img src="assets/images/project-NAME.png"
-     alt="Project Name"
-     style="width:100%; height:100%; object-fit:cover;">
-```
-
----
-
-## Themes
-
-Two themes, toggled via the taskbar button:
-
-| Theme | Palette | Vibe |
-|-------|---------|------|
-| 🌿 Forest | Deep greens, warm cream, earthy gold | Grounded, premium, literary |
-| ⚡ Electric | Near-black, electric cyan, neon accents | Live dashboard, data-forward |
-
-Theme preference is saved in `localStorage` — it persists across page reloads.
-
-To change the default theme: open `css/style.css` and on the `:root` selector,  
-change `--bg-wallpaper` and the other variables, or change the `data-theme` attribute  
-on `<html>` in `index.html` from `forest` to `electric`.
-
----
 
 ## How the OS Works
 
